@@ -184,7 +184,7 @@ public final class MarcRecord implements Cloneable {
     }
 
     @NotNull
-    public String[] fma(int tag) {
+    public LinkedList<String> fma(int tag) {
         LinkedList<String> result = new LinkedList<>();
         for (RecordField field : fields) {
             if (field.tag == tag) {
@@ -194,11 +194,11 @@ public final class MarcRecord implements Cloneable {
             }
         }
 
-        return result.toArray(new String[0]);
+        return result;
     }
 
     @NotNull
-    public String[] fma(int tag, char code) {
+    public LinkedList<String> fma(int tag, char code) {
         LinkedList<String> result = new LinkedList<>();
         for (RecordField field : fields) {
             if (field.tag == tag) {
@@ -209,11 +209,11 @@ public final class MarcRecord implements Cloneable {
             }
         }
 
-        return result.toArray(new String[0]);
+        return result;
     }
 
     @NotNull
-    public RecordField[] getField(int tag) {
+    public LinkedList<RecordField> getField(int tag) {
         LinkedList<RecordField> result = new LinkedList<>();
         for (RecordField field : fields) {
             if (field.tag == tag) {
@@ -221,7 +221,7 @@ public final class MarcRecord implements Cloneable {
             }
         }
 
-        return result.toArray(new RecordField[0]);
+        return result;
     }
 
     @Nullable
