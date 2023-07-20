@@ -3,6 +3,7 @@
 
 package ru.arsmagna.infrastructure;
 
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -21,6 +22,7 @@ import static ru.arsmagna.Utility.isNullOrEmpty;
  * Ответ сервера.
  */
 @SuppressWarnings({"WeakerAccess", "unused", "UnnecessaryLocalVariable"})
+@Slf4j
 public final class ServerResponse implements AutoCloseable {
 
     /**
@@ -104,6 +106,7 @@ public final class ServerResponse implements AutoCloseable {
 
     public void checkReturnCode() throws IrbisException {
         if (getReturnCode() < 0) {
+            log.error("Returned unacceptable return code {}", getReturnCode());
             throw new IrbisException(returnCode);
         }
     }
