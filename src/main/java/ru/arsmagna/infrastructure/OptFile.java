@@ -5,7 +5,6 @@ package ru.arsmagna.infrastructure;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import ru.arsmagna.*;
 
@@ -15,6 +14,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.Scanner;
 
 import static ru.arsmagna.Utility.isNullOrEmpty;
@@ -37,9 +37,8 @@ public final class OptFile {
 
     //=========================================================================
 
-    @Nullable
     @Contract(pure = true)
-    public String getWorksheet(@NotNull MarcRecord record) {
+    public Optional<String> getWorksheet(@NotNull MarcRecord record) {
         return record.fm(worksheetTag);
     }
 

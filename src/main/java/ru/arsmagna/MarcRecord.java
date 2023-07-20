@@ -8,10 +8,9 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import javax.swing.*;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedList;
+import java.util.*;
 
 import static ru.arsmagna.Utility.isNullOrEmpty;
 import static ru.arsmagna.Utility.nullableToString;
@@ -97,9 +96,7 @@ public final class MarcRecord implements Cloneable {
 
     public MarcRecord addField(int tag, SubField... subFields) {
         RecordField field = new RecordField(tag);
-        for (SubField subField : subFields) {
-            field.subFields.add(subField);
-        }
+        field.subFields.addAll(Arrays.asList(subFields));
         fields.add(field);
 
         return this;
@@ -108,9 +105,7 @@ public final class MarcRecord implements Cloneable {
     public MarcRecord addField(int tag, boolean condition, SubField... subFields) {
         if (condition) {
             RecordField field = new RecordField(tag);
-            for (SubField subField : subFields) {
-                field.subFields.add(subField);
-            }
+            field.subFields.addAll(Arrays.asList(subFields));
             fields.add(field);
         }
 
@@ -159,28 +154,26 @@ public final class MarcRecord implements Cloneable {
         return result;
     }
 
-    @Nullable
     @Contract(pure = true)
-    public String fm(int tag) {
+    public Optional<String> fm(int tag) {
         for (RecordField field : fields) {
             if (field.tag == tag) {
-                return field.value;
+                return Optional.of(field.value);
             }
         }
 
-        return null;
+        return Optional.empty();
     }
 
-    @Nullable
     @Contract(pure = true)
-    public String fm(int tag, char code) {
+    public Optional<String> fm(int tag, char code) {
         for (RecordField field : fields) {
             if (field.tag == tag) {
-                return field.getFirstSubFieldValue(code);
+                return Optional.ofNullable(field.getFirstSubFieldValue(code));
             }
         }
 
-        return null;
+        return Optional.empty();
     }
 
     @NotNull
@@ -224,28 +217,26 @@ public final class MarcRecord implements Cloneable {
         return result;
     }
 
-    @Nullable
     @Contract(pure = true)
-    public RecordField getField(int tag, int occurrence) {
+    public Optional<RecordField> getField(int tag, int occurrence) {
         for (RecordField field : fields) {
             if (field.tag == tag && --occurrence < 0) {
-                return field;
+                return Optional.of(field);
             }
         }
 
-        return null;
+        return Optional.empty();
     }
 
-    @Nullable
     @Contract(pure = true)
-    public RecordField getFirstField(int tag) {
+    public Optional<RecordField> getFirstField(int tag) {
         for (RecordField field : fields) {
             if (field.tag == tag) {
-                return field;
+                return Optional.of(field);
             }
         }
 
-        return null;
+        return Optional.empty();
     }
 
     /**
