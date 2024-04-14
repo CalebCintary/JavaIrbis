@@ -25,7 +25,7 @@ import static ru.arsmagna.infrastructure.CommandCode.*;
  * Подключение к серверу ИРБИС64.
  */
 @SuppressWarnings({"WeakerAccess", "UnnecessaryLocalVariable", "unused"})
-public final class IrbisConnection {
+public final class IrbisConnection implements AutoCloseable {
 
     /**
      * Адрес сервера.
@@ -1484,5 +1484,10 @@ public final class IrbisConnection {
         try (ServerResponse response = execute(query)) {
             response.getReturnCode();
         }
+    }
+
+    @Override
+    public void close() throws Exception {
+        disconnect();
     }
 }

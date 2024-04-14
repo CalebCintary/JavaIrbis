@@ -13,6 +13,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.Optional;
 
 import static ru.arsmagna.SubField.compareCodes;
 import static ru.arsmagna.Utility.isNullOrEmpty;
@@ -200,18 +201,17 @@ public final class RecordField implements Cloneable {
         return result.toArray(new SubField[0]);
     }
 
-    @Nullable
     @Contract(pure = true)
-    public SubField getSubField(char code, int occurrence) {
+    public Optional<SubField> getSubField(char code, int occurrence) {
         for (SubField subField: subFields) {
             if (compareCodes(code, subField.code) == 0) {
                 if (--occurrence < 0) {
-                    return subField;
+                    return Optional.of(subField);
                 }
             }
         }
 
-        return null;
+        return Optional.empty();
     }
 
     public String[] getSubFieldValue(char code) {
