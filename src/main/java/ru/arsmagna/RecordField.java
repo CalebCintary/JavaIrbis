@@ -168,14 +168,14 @@ public final class RecordField implements Cloneable {
 
     @Nullable
     @Contract(pure = true)
-    public SubField getFirstSubField(char code) {
+    public Optional<SubField> getFirstSubField(char code) {
         for (SubField subField: subFields) {
             if (compareCodes(code, subField.code) == 0) {
-                return subField;
+                return Optional.of(subField);
             }
         }
 
-        return null;
+        return Optional.empty();
     }
 
     @Nullable

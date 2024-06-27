@@ -6,9 +6,7 @@ package ru.arsmagna;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.util.*;
 
@@ -237,6 +235,14 @@ public final class MarcRecord implements Cloneable {
         }
 
         return Optional.empty();
+    }
+
+    public Optional<String> getFirstFieldAndSubField(int tag, char subTag) {
+        return fields.stream()
+                .filter(field -> field.tag == tag)
+                .findFirst()
+                .flatMap(recordField -> recordField.getFirstSubField(subTag)
+                        .map(subField -> subField.value));
     }
 
     /**
