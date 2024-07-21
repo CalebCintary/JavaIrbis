@@ -3,9 +3,9 @@
 
 package ru.arsmagna.search;
 
+import lombok.Getter;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-
 import ru.arsmagna.infrastructure.ServerResponse;
 
 import java.util.ArrayList;
@@ -26,6 +26,7 @@ public final class TermInfo implements Cloneable {
     /**
      * Поисковый термин.
      */
+    @Getter
     public String text;
 
     //=========================================================================
