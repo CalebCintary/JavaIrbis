@@ -120,6 +120,10 @@ public final class MarcRecord implements Cloneable {
         return this;
     }
 
+    public boolean removeField(RecordField field) {
+        return fields.remove(field);
+    }
+
     /**
      * Очистка записи (удаление всех полей).
      *
