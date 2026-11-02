@@ -922,6 +922,8 @@ public final class IrbisConnection implements AutoCloseable {
         ClientQuery query = new ClientQuery(this, READ_RECORD);
         query.addAnsi(databaseName);
         query.add(mfn);
+        // Параметр LOCK обязателен: сервер 64.2022.1 без него возвращает -2222 (WRONG_PROTOCOL)
+        query.add(0);
 
         try (ServerResponse response = execute(query)) {
             response.checkReturnCode(Utility.READ_RECORD_CODES);
